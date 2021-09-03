@@ -1,9 +1,11 @@
 package com.hendisantika.controller;
 
+import com.hendisantika.entity.Member;
 import com.hendisantika.repository.MemberRepository;
 import com.hendisantika.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -30,4 +32,9 @@ public class MemberController {
         return "loginForm";
     }
 
+    @GetMapping("/register")
+    public String registerForm(Model model) {
+        model.addAttribute("member", new Member());
+        return "registerForm";
+    }
 }
