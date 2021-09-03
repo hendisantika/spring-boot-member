@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html layout:decorate="~{fragments/main_layout}" xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Back to Spring</title>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <main class="container" role="main">
+        <div class="jumbotron">
+            <h1>Back to Spring</h1>
+            <p class="lead">This example is a quick exercise to use bootstrap with Spring. We used simple design in
+                bootstrap. I just i wanted to show integration you.</p>
+            <p Message example; th:text="${message}"></p>
+            <p Date example; th:text="${date}"></p>
+            <p sec:authorize="isAuthenticated()">Username;<span sec:authorize="isAuthenticated()"
+                                                                th:text="${#authentication.getPrincipal().getUsername()}"></span>
+            </p>
+            <div class="memberInformation">
+                <header> Member Information</header>
+                <p sec:authorize="isAuthenticated()">First Name ; <span sec:authorize="isAuthenticated()"
+                                                                        th:text="${members.firstName}"></span></p>
+                <p sec:authorize="isAuthenticated()">Last Name ; <span sec:authorize="isAuthenticated()"
+                                                                       th:text="${members.lastName}"></span></p>
+                <p sec:authorize="isAuthenticated()">e - mail ; <span sec:authorize="isAuthenticated()"
+                                                                      th:text="${members.email}"></span></p>
+            </div>
+            <a class="btn btn-lg btn-primary" href="/register" role="button" sec:authorize="!isAuthenticated()">Register
+                &raquo;</a>
+            <a class="btn btn-lg btn-primary" href="/login" role="button" sec:authorize="!isAuthenticated()">Login
+                &raquo;</a>
+            <a class="btn btn-lg btn-primary" href="/logout" role="button" sec:authorize="isAuthenticated()">Logout
+                &raquo;</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>
