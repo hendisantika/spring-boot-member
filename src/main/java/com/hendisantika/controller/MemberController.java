@@ -4,6 +4,7 @@ import com.hendisantika.repository.MemberRepository;
 import com.hendisantika.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,4 +24,10 @@ public class MemberController {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "loginForm";
+    }
+
 }

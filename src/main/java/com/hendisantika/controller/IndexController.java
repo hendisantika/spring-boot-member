@@ -29,7 +29,7 @@ public class IndexController {
     @GetMapping("/")
     public String showIndex(Model model, Principal principal, Member member) {
         if (principal == null) {
-            return "views/loginForm";
+            return "loginForm";
         }
         model.addAttribute("message", "Hello everyone, we are go to back to Spring with together");
         model.addAttribute("date", new Date());
