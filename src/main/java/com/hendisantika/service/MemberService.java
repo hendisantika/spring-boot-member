@@ -1,8 +1,14 @@
 package com.hendisantika.service;
 
+import com.hendisantika.entity.Member;
+import com.hendisantika.entity.Role;
 import com.hendisantika.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,4 +26,14 @@ public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
+    public Member createMember(Member member) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        member.setPassword(encoder.encode(member.getPassword()));
+        Role memberRole = new Role("ADMIN");
+        List<Role> roles = new ArrayList<>();
+        roles.add(memberRole);
+        member.setRole(roles);
+        memberRepository.save(member);
+        return member;
+    }
 }
