@@ -3,7 +3,7 @@ package com.hendisantika.service;
 import com.hendisantika.entity.Member;
 import com.hendisantika.entity.Role;
 import com.hendisantika.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +21,10 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Service
+@RequiredArgsConstructor
 public class MemberService {
 
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     public Member createMember(Member member) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

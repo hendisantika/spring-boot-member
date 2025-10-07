@@ -2,7 +2,7 @@ package com.hendisantika.controller;
 
 import com.hendisantika.entity.Member;
 import com.hendisantika.repository.MemberRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,19 +21,20 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 @Controller
+@RequiredArgsConstructor
 public class IndexController {
 
-    @Autowired
-    MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/")
-    public String showIndex(Model model, Principal principal, Member member) {
+    public String showIndex(Model model, Principal principal) {
         if (principal == null) {
             return "loginForm";
         }
+        Member member = memberRepository.findByEmail(principal.getName());
         model.addAttribute("message", "Hello everyone, we are go to back to Spring with together");
         model.addAttribute("date", new Date());
-        model.addAttribute("members", memberRepository.getOne(principal.getName()));
+        model.addAttribute("members", member);
         return "index";
     }
 }
