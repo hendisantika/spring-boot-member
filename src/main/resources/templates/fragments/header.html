@@ -1,26 +1,57 @@
-<header th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
+<header th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Back to Spring</a>
-        <button aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
-                class="navbar-toggler"
-                data-target="#navbarCollapse" data-toggle="collapse" type="button">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
-                       data-toggle="dropdown" href="#"
-                       id="dropdown01">Dropdown</a>
-                    <div aria-labelledby="dropdown01" class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                    </div>
-                </li>
-            </ul>
+        <div class="container">
+            <a class="navbar-brand" href="/"
+               style="font-weight: 700; font-size: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                <i class="fas fa-leaf"></i>
+                <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    Spring Boot Member
+                </span>
+            </a>
+            <button aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
+                    data-target="#navbarCollapse" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" href="/login">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" href="/register">
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+                        <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
+                           data-toggle="dropdown" href="#" id="userDropdown">
+                            <i class="fas fa-user-circle"></i>
+                            <span sec:authentication="principal.username"></span>
+                        </a>
+                        <div aria-labelledby="userDropdown" class="dropdown-menu dropdown-menu-right"
+                             style="border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: none;">
+                            <a class="dropdown-item" href="/" style="padding: 0.75rem 1.5rem;">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <form method="post" style="margin: 0;" th:action="@{/logout}">
+                                <button class="dropdown-item" style="padding: 0.75rem 1.5rem; background: none; border: none; width: 100%; text-align: left; color: #e53e3e; cursor: pointer;"
+                                        type="submit">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 </header>

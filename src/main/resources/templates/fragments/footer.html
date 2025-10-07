@@ -1,7 +1,85 @@
 <div th:fragment="footer" xmlns:th="http://www.w3.org/1999/xhtml">
-    <footer class="footer mt-auto py-3">
+    <footer class="footer mt-auto">
         <div class="container">
-            <span class="text-muted">Place sticky footer content here.</span>
+            <div class="row" style="padding: 2rem 0;">
+                <div class="col-md-4 mb-3">
+                    <h5 style="color: white; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-leaf"></i>
+                        Spring Boot Member
+                    </h5>
+                    <p class="footer-text" style="margin-bottom: 1rem;">
+                        A modern and secure member management system built with Spring Boot, Spring Security, and MySQL.
+                    </p>
+                    <div style="display: flex; gap: 1rem; font-size: 1.25rem;">
+                        <a href="https://github.com/hendisantika" style="color: #e2e8f0; transition: all 0.3s ease;"
+                           target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://t.me/hendisantika34" style="color: #e2e8f0; transition: all 0.3s ease;"
+                           target="_blank">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="mailto:hendisantika@gmail.com" style="color: #e2e8f0; transition: all 0.3s ease;">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5 style="color: white; font-weight: 700; margin-bottom: 1rem;">
+                        <i class="fas fa-link"></i> Quick Links
+                    </h5>
+                    <div class="footer-links" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <a href="/">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                        <a href="/login">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                        <a href="/register">
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                        <a href="https://github.com/hendisantika/spring-boot-member" target="_blank">
+                            <i class="fab fa-github"></i> GitHub Repository
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5 style="color: white; font-weight: 700; margin-bottom: 1rem;">
+                        <i class="fas fa-code"></i> Technologies
+                    </h5>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <span class="badge badge-primary">
+                            <i class="fab fa-java"></i> Java 21
+                        </span>
+                        <span class="badge badge-primary">
+                            <i class="fas fa-leaf"></i> Spring Boot 3.5.6
+                        </span>
+                        <span class="badge badge-primary">
+                            <i class="fas fa-shield-alt"></i> Spring Security
+                        </span>
+                        <span class="badge badge-primary">
+                            <i class="fas fa-database"></i> MySQL 9.4.0
+                        </span>
+                        <span class="badge badge-primary">
+                            <i class="fab fa-docker"></i> Docker
+                        </span>
+                        <span class="badge badge-primary">
+                            <i class="fab fa-bootstrap"></i> Bootstrap 5
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="divider" style="background: rgba(255, 255, 255, 0.1); margin: 1rem 0;"></div>
+            <div class="text-center" style="padding: 1rem 0;">
+                <p class="footer-text" style="margin: 0;">
+                    <i class="far fa-copyright"></i> <span th:text="${#dates.year(#dates.createNow())}"></span>
+                    <strong>Hendi Santika</strong>. Made with
+                    <i class="fas fa-heart" style="color: #e53e3e;"></i> using Spring Boot
+                </p>
+                <p class="footer-text" style="margin: 0.5rem 0 0 0; font-size: 0.875rem;">
+                    <i class="fas fa-code"></i> Built with Spring Boot • Spring Security • MySQL • Docker • Bootstrap
+                </p>
+            </div>
         </div>
     </footer>
 </div>

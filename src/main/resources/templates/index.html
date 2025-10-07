@@ -5,35 +5,162 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Back to Spring</title>
+    <title>Dashboard - Spring Boot Member</title>
 </head>
 <body>
 <div class="container" layout:fragment="content">
-    <main class="container" role="main">
+    <main class="container" role="main" style="margin-top: 2rem;">
+        <!-- Hero Section -->
         <div class="jumbotron">
-            <h1>Back to Spring</h1>
-            <p class="lead">This example is a quick exercise to use bootstrap with Spring. We used simple design in
-                bootstrap. I just i wanted to show integration you.</p>
-            <p Message example; th:text="${message}"></p>
-            <p Date example; th:text="${date}"></p>
-            <p sec:authorize="isAuthenticated()">Username;<span sec:authorize="isAuthenticated()"
-                                                                th:text="${#authentication.getPrincipal().getUsername()}"></span>
-            </p>
-            <div class="memberInformation">
-                <header> Member Information</header>
-                <p sec:authorize="isAuthenticated()">First Name ; <span sec:authorize="isAuthenticated()"
-                                                                        th:text="${members.firstName}"></span></p>
-                <p sec:authorize="isAuthenticated()">Last Name ; <span sec:authorize="isAuthenticated()"
-                                                                       th:text="${members.lastName}"></span></p>
-                <p sec:authorize="isAuthenticated()">e - mail ; <span sec:authorize="isAuthenticated()"
-                                                                      th:text="${members.email}"></span></p>
+            <div class="text-center mb-4">
+                <div class="float-icon" style="font-size: 5rem; margin-bottom: 1rem;">
+                    <i class="fas fa-rocket"
+                       style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                </div>
+                <h1><i class="fas fa-leaf"></i> Spring Boot Member Management</h1>
+                <p class="lead">
+                    <i class="fas fa-quote-left"></i>
+                    A modern and secure member management system built with Spring Boot, Spring Security, and MySQL.
+                    Experience the power of enterprise-grade authentication and authorization.
+                    <i class="fas fa-quote-right"></i>
+                </p>
             </div>
-            <a class="btn btn-lg btn-primary" href="/register" role="button" sec:authorize="!isAuthenticated()">Register
-                &raquo;</a>
-            <a class="btn btn-lg btn-primary" href="/login" role="button" sec:authorize="!isAuthenticated()">Login
-                &raquo;</a>
-            <a class="btn btn-lg btn-primary" href="/logout" role="button" sec:authorize="isAuthenticated()">Logout
-                &raquo;</a>
+
+            <div class="divider"></div>
+
+            <!-- System Information -->
+            <div class="row" style="margin: 2rem 0;">
+                <div class="col-md-6 mb-3">
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 15px; color: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                        <h5 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-info-circle"></i> System Message
+                        </h5>
+                        <p style="margin: 0; font-size: 1rem;" th:text="${message}"></p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div style="background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); padding: 1.5rem; border-radius: 15px; color: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                        <h5 style="margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-calendar-alt"></i> Current Date & Time
+                        </h5>
+                        <p style="margin: 0; font-size: 1rem;" th:text="${date}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Authenticated User Info -->
+            <div sec:authorize="isAuthenticated()" style="margin-top: 2rem;">
+                <div style="background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%); padding: 1.5rem; border-radius: 15px; color: white; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); margin-bottom: 2rem;">
+                    <h5 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-user-check"></i> Logged In As
+                    </h5>
+                    <p style="margin: 0; font-size: 1.25rem; font-weight: 600;">
+                        <i class="fas fa-envelope"></i>
+                        <span th:text="${#authentication.getPrincipal().getUsername()}"></span>
+                    </p>
+                </div>
+
+                <!-- Member Information Card -->
+                <div class="memberInformation">
+                    <header>
+                        <i class="fas fa-id-card"></i> Member Information
+                    </header>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div style="background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
+                                <p style="color: #718096; font-size: 0.875rem; margin-bottom: 0.25rem; font-weight: 600;">
+                                    <i class="fas fa-user"></i> First Name
+                                </p>
+                                <span style="font-size: 1.125rem; display: block;"
+                                      th:text="${members.firstName}"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div style="background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
+                                <p style="color: #718096; font-size: 0.875rem; margin-bottom: 0.25rem; font-weight: 600;">
+                                    <i class="fas fa-user"></i> Last Name
+                                </p>
+                                <span style="font-size: 1.125rem; display: block;" th:text="${members.lastName}"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div style="background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);">
+                                <p style="color: #718096; font-size: 0.875rem; margin-bottom: 0.25rem; font-weight: 600;">
+                                    <i class="fas fa-envelope"></i> Email Address
+                                </p>
+                                <span style="font-size: 1.125rem; display: block; word-break: break-all;"
+                                      th:text="${members.email}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="divider" style="margin: 2.5rem 0;"></div>
+
+            <div class="text-center">
+                <!-- Not Authenticated - Show Login/Register -->
+                <div sec:authorize="!isAuthenticated()">
+                    <h4 style="color: #4a5568; margin-bottom: 1.5rem;">
+                        <i class="fas fa-hand-point-right"></i> Get Started Today
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <a class="btn btn-primary btn-block btn-lg" href="/login" role="button"
+                               style="padding: 1rem; font-size: 1.125rem;">
+                                <i class="fas fa-sign-in-alt"></i> Sign In
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a class="btn btn-success btn-block btn-lg" href="/register" role="button"
+                               style="padding: 1rem; font-size: 1.125rem;">
+                                <i class="fas fa-user-plus"></i> Create Account
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Authenticated - Show Logout -->
+                <div sec:authorize="isAuthenticated()">
+                    <h4 style="color: #4a5568; margin-bottom: 1.5rem;">
+                        <i class="fas fa-hand-peace"></i> Thanks for being with us!
+                    </h4>
+                    <form method="post" style="display: inline-block; width: 100%; max-width: 400px;"
+                          th:action="@{/logout}">
+                        <button class="btn btn-lg btn-block" style="background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%); color: white; padding: 1rem; font-size: 1.125rem; font-weight: 600; border: none; border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;"
+                                type="submit">
+                            <i class="fas fa-sign-out-alt"></i> Sign Out
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="row" style="margin-top: 2rem; margin-bottom: 3rem;">
+            <div class="col-md-4 mb-4">
+                <div style="background: white; border-radius: 15px; padding: 2rem; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); height: 100%; border-top: 4px solid #667eea;">
+                    <i class="fas fa-shield-alt" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                    <h4 style="color: #2d3748; margin-bottom: 1rem;">Secure Authentication</h4>
+                    <p style="color: #718096;">Industry-standard security with Spring Security and BCrypt
+                        encryption.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div style="background: white; border-radius: 15px; padding: 2rem; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); height: 100%; border-top: 4px solid #48bb78;">
+                    <i class="fas fa-database" style="font-size: 3rem; color: #48bb78; margin-bottom: 1rem;"></i>
+                    <h4 style="color: #2d3748; margin-bottom: 1rem;">MySQL Database</h4>
+                    <p style="color: #718096;">Reliable data persistence with MySQL 9.4.0 and JPA/Hibernate ORM.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div style="background: white; border-radius: 15px; padding: 2rem; text-align: center; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); height: 100%; border-top: 4px solid #4299e1;">
+                    <i class="fas fa-docker" style="font-size: 3rem; color: #4299e1; margin-bottom: 1rem;"></i>
+                    <h4 style="color: #2d3748; margin-bottom: 1rem;">Docker Integration</h4>
+                    <p style="color: #718096;">Seamless containerization with Docker Compose for easy deployment.</p>
+                </div>
+            </div>
         </div>
     </main>
 </div>

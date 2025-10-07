@@ -4,91 +4,109 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Register Form</title>
+    <title>Register - Spring Boot Member</title>
 </head>
 <body>
 <div class="container" layout:fragment="content">
-    <div class="simple-login-container  col-md-4 offset-md-4">
-        <!--Warning Banner is Started-->
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <div class="alert alert-info alert-labeled" th:if="${exist}">
-                    <button class="close" data-dismiss="alert" type="button">
-                        <span aria-hidden="true">×</span><span class="sr-only">Close</span>
-                    </button>
-                    <div class="alert-labeled-row">
-                        <span class="alert-label alert-label-left alert-labelled-cell">
-                            <i class="glyphicon glyphicon-info-sign"></i>
-                        </span>
-                        <p class="alert-body alert-body-right alert-labelled-cell">
-                            e-mail address not available. Please, try new a e-mail address.
-                        </p>
-                    </div>
+    <div class="col-md-6 col-lg-5 mx-auto">
+        <div class="auth-card">
+            <div class="text-center mb-4">
+                <div class="float-icon" style="font-size: 4rem; margin-bottom: 1rem;">
+                    <i class="fas fa-user-plus"
+                       style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
                 </div>
-                <div class="alert alert-info alert-labeled" th:if="${success}">
-                    <button class="close" data-dismiss="alert" type="button">
-                        <span aria-hidden="true">×</span><span class="sr-only">Close</span>
-                    </button>
-                    <div class="alert-labeled-row">
-                        <span class="alert-label alert-label-left alert-labelled-cell">
-                            <i class="glyphicon glyphicon-info-sign"></i>
-                        </span>
-                        <p class="alert-body alert-body-right alert-labelled-cell alertload">
-                            Success, You are redirecting to the login page <i class="fa fa-spinner fa-spin"></i>
-                        </p>
-                    </div>
-                    <style>
-                        .alertload {
-                            border: none; /* Remove borders */
-                            color: white; /* White text */
-                            padding: 12px 24px; /* Some padding */
-                            font-size: 16px; /* Set a font-size */
-                        }
+                <h2><i class="fas fa-edit"></i> Create Account</h2>
+                <p style="color: #718096; margin-top: -0.5rem;">Join us today and get started</p>
+            </div>
 
-                        /* Add a right margin to each icon */
-                        .fa {
-                            float: right;
-                        }
-                    </style>
-                    <script>
-                        setTimeout(function () {
-                            window.location.href = "/login";
-                        }, 2500);
-                    </script>
-                </div>
+            <!-- Error Alert - Email Already Exists -->
+            <div class="alert alert-danger" style="display: flex; align-items: center; gap: 0.5rem;" th:if="${exist}">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Email address already exists. Please try a different email address.</span>
             </div>
-        </div><!-- Warning Banner is Closed-->
-        <h2>Register Form</h2>
-        <form method="post" th:action="@{/register}" th:object="${member}">
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <input class="form-control" id="firstName" placeholder="First Name" th:field="*{firstName}"
-                           type="text">
-                </div>
+
+            <!-- Success Alert -->
+            <div class="alert alert-success" style="display: flex; align-items: center; gap: 0.5rem;"
+                 th:if="${success}">
+                <i class="fas fa-check-circle"></i>
+                <span>Registration successful! Redirecting to login page... <i
+                        class="fas fa-spinner spinner"></i></span>
+                <script>
+                    setTimeout(function () {
+                        window.location.href = "/login";
+                    }, 2500);
+                </script>
             </div>
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <input class="form-control" id="lastName" placeholder="Last Name" th:field="*{lastName}"
-                           type="text">
+
+            <form method="post" th:action="@{/register}" th:object="${member}">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">
+                                <i class="fas fa-user"></i> First Name
+                            </label>
+                            <div style="position: relative;">
+                                <i class="input-icon fas fa-user"></i>
+                                <input class="form-control" id="firstName" placeholder="Enter first name"
+                                       required th:field="*{firstName}" type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">
+                                <i class="fas fa-user"></i> Last Name
+                            </label>
+                            <div style="position: relative;">
+                                <i class="input-icon fas fa-user"></i>
+                                <input class="form-control" id="lastName" placeholder="Enter last name"
+                                       required th:field="*{lastName}" type="text">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <input class="form-control" id="email" placeholder="email" th:field="*{email}" type="text">
+
+                <div class="form-group">
+                    <label class="form-label" for="email">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <div style="position: relative;">
+                        <i class="input-icon fas fa-envelope"></i>
+                        <input class="form-control" id="email" placeholder="Enter your email"
+                               required th:field="*{email}" type="email">
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <input class="form-control" id="password" placeholder="Enter your Password" th:field="*{password}"
-                           type="password">
+
+                <div class="form-group">
+                    <label class="form-label" for="password">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <div style="position: relative;">
+                        <i class="input-icon fas fa-lock"></i>
+                        <input class="form-control" id="password" minlength="4"
+                               placeholder="Create a strong password" required th:field="*{password}" type="password">
+                    </div>
+                    <small style="color: #718096; font-size: 0.875rem; display: block; margin-top: 0.25rem;">
+                        <i class="fas fa-info-circle"></i> Password must be at least 4 characters long
+                    </small>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 form-group">
-                    <input class="btn btn-primary btn-block btn-login" type="submit">
+
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-lg" type="submit">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
                 </div>
-            </div>
-        </form>
+
+                <div class="divider"></div>
+
+                <div class="text-center">
+                    <p style="color: #718096; margin-bottom: 1rem;">Already have an account?</p>
+                    <a class="btn btn-success btn-block btn-lg" href="/login">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 </body>
