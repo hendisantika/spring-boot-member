@@ -1,9 +1,11 @@
 # Spring Boot Member Management System
 
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.6-brightgreen.svg)](https://spring.io/projects/spring-boot)
-[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
+[![Java CI with Maven](https://github.com/hendisantika/spring-boot-member/actions/workflows/maven.yml/badge.svg)](https://github.com/hendisantika/spring-boot-member/actions/workflows/maven.yml)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.1-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Java](https://img.shields.io/badge/Java-25-orange.svg)](https://openjdk.org/projects/jdk/25/)
 [![MySQL](https://img.shields.io/badge/MySQL-9.4.0-blue.svg)](https://www.mysql.com/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg)](https://www.docker.com/)
+[![Dependabot](https://img.shields.io/badge/Dependabot-enabled-025E8C.svg?logo=dependabot)](.github/dependabot.yml)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A comprehensive Spring Boot application for member management with Spring Security authentication, MySQL database
@@ -37,6 +39,7 @@ Dashboard Page
 - [Development Guide](#development-guide)
 - [Testing](#testing)
 - [Deployment](#deployment)
+- [CI/CD & Dependency Updates](#cicd--dependency-updates)
 - [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
 - [License](#license)
@@ -64,55 +67,60 @@ Dashboard Page
 - Form validation with Bean Validation
 - Exception handling and error pages
 - Logging configuration
-- Maven build automation
+- Maven build automation (Maven Wrapper 3.9.11)
+- GitHub Actions CI with a MySQL service container
+- Dependabot with grouped updates for Maven, GitHub Actions and Docker Compose
 
 ## 🛠 Technologies
 
 ### Backend
 
-- **Spring Boot 3.5.6** - Application framework
-- **Spring Security 6.5.5** - Authentication & authorization
+- **Spring Boot 4.1.1** - Application framework (Spring Framework 7.0.9)
+- **Spring Security 7.1.1** - Authentication & authorization
 - **Spring Data JPA** - Data persistence
-- **Hibernate 6.6.29** - ORM framework
-- **Java 21** - Programming language
-- **Maven** - Build tool
-- **Lombok** - Code generation
+- **Hibernate 7.4.5** - ORM framework
+- **Java 25 (LTS)** - Programming language
+- **Maven 3.9.11** (via Maven Wrapper) - Build tool
+- **Lombok 1.18.46** - Code generation
 
 ### Database
 
 - **MySQL 9.4.0** - Relational database
-- **HikariCP** - Connection pooling
+- **MySQL Connector/J 9.7.0** - JDBC driver
+- **HikariCP 7.0.2** - Connection pooling
 - **Flyway/Liquibase ready** - Database migration (optional)
 
 ### Frontend
 
-- **Thymeleaf 3.1.3** - Template engine
+- **Thymeleaf 3.1.5** - Template engine
 - **Bootstrap 5.3.8** - CSS framework
-- **jQuery 3.7.1** - JavaScript library
-- **SweetAlert2 11.24.0** - Beautiful alerts
-- **Thymeleaf Layout Dialect** - Template layouts
+- **jQuery 4.0.0** - JavaScript library
+- **SweetAlert2 11.26.25** - Beautiful alerts
+- **Thymeleaf Layout Dialect 4.0.1** - Template layouts
 
 ### DevOps & Tools
 
 - **Docker & Docker Compose** - Containerization
 - **Spring Boot Docker Compose** - Auto container management
 - **Spring Boot DevTools** - Hot reload
+- **GitHub Actions** - Continuous integration
+- **Dependabot** - Automated dependency updates
 - **Git** - Version control
 
 ## 📦 Prerequisites
 
 Before you begin, ensure you have the following installed:
 
-- **Java Development Kit (JDK) 21** or higher
+- **Java Development Kit (JDK) 25** or higher
   ```bash
   java -version
-  # Should show: java version "21.x.x"
+  # Should show: openjdk version "25.x.x"
   ```
 
-- **Apache Maven 3.6+**
+- **Apache Maven 3.9+** (optional, the bundled Maven Wrapper `./mvnw` downloads Maven 3.9.11 for you)
   ```bash
-  mvn -version
-  # Should show: Apache Maven 3.x.x
+  ./mvnw -version
+  # Should show: Apache Maven 3.9.11
   ```
 
 - **Docker & Docker Compose**
@@ -138,13 +146,15 @@ cd spring-boot-member
 ### 2. Build the Project
 
 ```bash
-mvn clean install
+# Tests need MySQL running, so start it first
+docker compose up -d
+./mvnw clean install
 ```
 
 ### 3. Run the Application
 
 ```bash
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
 The application will:
@@ -176,13 +186,15 @@ The main configuration file is located at `src/main/resources/application.proper
 
 ```properties
 # Database Configuration
-spring.datasource.url=jdbc:mysql://localhost:3310/memberdb?createDatabaseIfNotExist=true
+spring.datasource.url=jdbc:mysql://localhost:3310/memberdb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
 spring.datasource.username=yu71
 spring.datasource.password=53cret
 # JPA/Hibernate Configuration
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
+# Hibernate 7: MySQL8Dialect was removed, use MySQLDialect
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 # Server Configuration
 server.port=8080
 ```
@@ -336,13 +348,13 @@ spring-boot-member/
 ### Running in Development Mode
 
 ```bash
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
 ### Building for Production
 
 ```bash
-mvn clean package
+./mvnw clean package
 java -jar target/spring-boot-member-0.0.1-SNAPSHOT.jar
 ```
 
@@ -355,12 +367,14 @@ java -jar target/spring-boot-member-0.0.1-SNAPSHOT.jar
 
 ## 🧪 Testing
 
-```bash
-# Run all tests
-mvn test
+The context-load test connects to MySQL on `localhost:3310`, so start the database before running the tests:
 
-# Run with coverage
-mvn clean test jacoco:report
+```bash
+# Start MySQL
+docker compose up -d
+
+# Run all tests
+./mvnw test
 ```
 
 ## 🚢 Deployment
@@ -374,6 +388,30 @@ docker build -t spring-boot-member:latest .
 # Run with Docker Compose
 docker-compose up -d
 ```
+
+## ⚙️ CI/CD & Dependency Updates
+
+### GitHub Actions
+
+The [`Java CI with Maven`](.github/workflows/maven.yml) workflow runs on every push and pull request to `main` (and can
+be triggered manually):
+
+- Sets up **Temurin JDK 25** with Maven dependency caching
+- Starts a **MySQL 9.4.0 service container** on port `3310`, using the same credentials as `docker-compose.yml`
+- Builds and tests with `./mvnw -B package`
+- On push to `main`, submits the Maven dependency graph to GitHub so Dependabot alerts are more accurate
+
+### Dependabot
+
+[`.github/dependabot.yml`](.github/dependabot.yml) keeps dependencies up to date:
+
+| Ecosystem      | Schedule                    | Grouping                                              | Commit prefix   |
+|----------------|-----------------------------|-------------------------------------------------------|-----------------|
+| Maven          | Daily, 05:00 Asia/Jakarta   | `spring-boot`, `webjars`, `maven-minor-and-patch`     | `chore(deps)`   |
+| GitHub Actions | Daily, 05:00 Asia/Jakarta   | All actions in a single `github-actions` PR           | `chore(ci)`     |
+| Docker Compose | Weekly, Monday 05:00        | MySQL image in `docker-compose.yml`                   | `chore(docker)` |
+
+All Dependabot PRs are labelled `dependencies` plus an ecosystem label.
 
 ## 🔧 Troubleshooting
 
@@ -404,6 +442,15 @@ docker-compose logs mysql
 # Restart containers
 docker-compose restart
 ```
+
+### `Unable to resolve name [org.hibernate.dialect.MySQL8Dialect]`
+
+Hibernate 7 (Spring Boot 4) removed `MySQL8Dialect`. Use `org.hibernate.dialect.MySQLDialect`, or remove the
+`hibernate.dialect` property and let Hibernate detect it.
+
+### `Public Key Retrieval is not allowed`
+
+Add `allowPublicKeyRetrieval=true` to the JDBC URL. MySQL 9 uses `caching_sha2_password` by default.
 
 ### LazyInitializationException
 
@@ -458,4 +505,4 @@ This project is licensed under the MIT License.
 
 **⭐ If you find this project helpful, please give it a star!**
 
-*Last Updated: October 8, 2025*
+*Last Updated: October 25, 2026*
