@@ -3,7 +3,7 @@
 [![Java CI with Maven](https://github.com/hendisantika/spring-boot-member/actions/workflows/maven.yml/badge.svg)](https://github.com/hendisantika/spring-boot-member/actions/workflows/maven.yml)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.1-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-25-orange.svg)](https://openjdk.org/projects/jdk/25/)
-[![MySQL](https://img.shields.io/badge/MySQL-9.4.0-blue.svg)](https://www.mysql.com/)
+[![MySQL](https://img.shields.io/badge/MySQL-26.7.0-blue.svg)](https://www.mysql.com/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg)](https://www.docker.com/)
 [![Dependabot](https://img.shields.io/badge/Dependabot-enabled-025E8C.svg?logo=dependabot)](.github/dependabot.yml)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -51,7 +51,7 @@ Dashboard Page
 - 🔐 **User Authentication & Authorization** - Secure login/logout with Spring Security
 - 👤 **User Registration** - Self-service user registration with email validation
 - 🔑 **Role-Based Access Control (RBAC)** - Admin role management
-- 🗄️ **Database Integration** - MySQL 9.4.0 with JPA/Hibernate
+- 🗄️ **Database Integration** - MySQL 26.7.0 with JPA/Hibernate
 - 🐳 **Docker Compose Support** - Automatic database container management
 - 🎨 **Modern UI** - Bootstrap 5.3.8, jQuery, and SweetAlert2
 - 🔄 **Auto Database Init** - Automatic schema creation and admin user setup
@@ -67,7 +67,7 @@ Dashboard Page
 - Form validation with Bean Validation
 - Exception handling and error pages
 - Logging configuration
-- Maven build automation (Maven Wrapper 3.9.11)
+- Maven build automation (Maven Wrapper 3.10.0)
 - GitHub Actions CI with a MySQL service container
 - Dependabot with grouped updates for Maven, GitHub Actions and Docker Compose
 
@@ -80,12 +80,12 @@ Dashboard Page
 - **Spring Data JPA** - Data persistence
 - **Hibernate 7.4.5** - ORM framework
 - **Java 25 (LTS)** - Programming language
-- **Maven 3.9.11** (via Maven Wrapper) - Build tool
+- **Maven 3.10.0** (via Maven Wrapper) - Build tool
 - **Lombok 1.18.46** - Code generation
 
 ### Database
 
-- **MySQL 9.4.0** - Relational database
+- **MySQL 26.7.0** - Relational database
 - **MySQL Connector/J 9.7.0** - JDBC driver
 - **HikariCP 7.0.2** - Connection pooling
 - **Flyway/Liquibase ready** - Database migration (optional)
@@ -117,10 +117,10 @@ Before you begin, ensure you have the following installed:
   # Should show: openjdk version "25.x.x"
   ```
 
-- **Apache Maven 3.9+** (optional, the bundled Maven Wrapper `./mvnw` downloads Maven 3.9.11 for you)
+- **Apache Maven 3.9+** (optional, the bundled Maven Wrapper `./mvnw` downloads Maven 3.10.0 for you)
   ```bash
   ./mvnw -version
-  # Should show: Apache Maven 3.9.11
+  # Should show: Apache Maven 3.10.0
   ```
 
 - **Docker & Docker Compose**
@@ -208,7 +208,7 @@ The `docker-compose.yml` file:
 ```yaml
 services:
   mysql:
-    image: mysql:9.4.0
+    image: mysql:26.7.0
     container_name: spring-boot-member-mysql
     environment:
       MYSQL_ROOT_PASSWORD: 53cret
@@ -234,7 +234,7 @@ volumes:
 | **Username**      | yu71                           |
 | **Password**      | 53cret                         |
 | **Root Password** | 53cret                         |
-| **Image**         | mysql:9.4.0                    |
+| **Image**         | mysql:26.7.0                   |
 
 ### Manual Docker Commands
 
@@ -397,7 +397,7 @@ The [`Java CI with Maven`](.github/workflows/maven.yml) workflow runs on every p
 be triggered manually):
 
 - Sets up **Temurin JDK 25** with Maven dependency caching
-- Starts a **MySQL 9.4.0 service container** on port `3310`, using the same credentials as `docker-compose.yml`
+- Starts a **MySQL 26.7.0 service container** on port `3310`, using the same credentials as `docker-compose.yml`
 - Builds and tests with `./mvnw -B package`
 - On push to `main`, submits the Maven dependency graph to GitHub so Dependabot alerts are more accurate
 
@@ -407,11 +407,14 @@ be triggered manually):
 
 | Ecosystem      | Schedule                    | Grouping                                              | Commit prefix   |
 |----------------|-----------------------------|-------------------------------------------------------|-----------------|
-| Maven          | Daily, 05:00 Asia/Jakarta   | `spring-boot`, `webjars`, `maven-minor-and-patch`     | `chore(deps)`   |
+| Maven          | Daily, 05:00 Asia/Jakarta   | `spring-boot`, `webjars`, `maven-minor-and-patch`     | `chore(deps)` / `chore(deps-dev)` |
 | GitHub Actions | Daily, 05:00 Asia/Jakarta   | All actions in a single `github-actions` PR           | `chore(ci)`     |
 | Docker Compose | Weekly, Monday 05:00        | MySQL image in `docker-compose.yml`                   | `chore(docker)` |
 
 All Dependabot PRs are labelled `dependencies` plus an ecosystem label.
+
+> **Note:** Dependabot does not update the MySQL `services` image in `.github/workflows/maven.yml`. When it bumps
+> `docker-compose.yml`, update the workflow image to the same tag.
 
 ## 🔧 Troubleshooting
 
