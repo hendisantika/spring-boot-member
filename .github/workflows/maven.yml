@@ -30,7 +30,7 @@ jobs:
     # The Spring context test needs a real MySQL instance (same settings as docker-compose.yml)
     services:
       mysql:
-        image: mysql:9.4.0
+        image: mysql:26.7.0
         env:
           MYSQL_ROOT_PASSWORD: 53cret
           MYSQL_DATABASE: memberdb
